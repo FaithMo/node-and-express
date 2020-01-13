@@ -1,4 +1,4 @@
-//======================STATICFILE=SERVER================================
+//======================STATIC=FILE=SERVER================================
 
 const express = require ('express');
 const app = express();
@@ -30,8 +30,8 @@ var dbConnection = pool.connect(function(err) {
 
 app.post('/post-feedback', (req, res) => {
   res.send("Thanks for the info! The following was saved to the database: ");
-  res.send(addNewVisitors(req.body));
-  // res.send(`Data recieved \n ${JSON.stringify(req.body)}`)
+  addNewVisitors(req.body);
+  //res.send(JSON.stringify(req.body))
 
 });
 
@@ -45,8 +45,5 @@ const addNewVisitors = (dataObj) => {
       (error, results) => {
         if (error) {throw new Error (error)}
         console.log(JSON.stringify(dataObj));
-        app.post((req, res) => {
-          res.send(JSON.stringify(dataObj.body));
-        })
       });
 };
