@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Visitors' form</title>
+</head>
+<style>
+.container{
+    width: 400px;
+    height: 600px;
+    background: rgba(0,0,0,0.4);
+    padding: 40px;
+    border-radius: 25px;
+    margin: 0 auto;
+    color: white;
+    margin-top: 50px;
+}
+h1{
+    font-size: 30px;
+    text-align: center;
+    color: lightblue;
+}
+</style>
+<body>
+    <div class="container">
+        <h1>Visitors' Form</h1>
+        <div id="form">
+            <form name="AddVisitor" method="POST" action="/post-feedback">
+                <label>Full Name</label> <br>
+                <input type="text" id="name" name="name"> <br>
+                <label>Age</label> <br> 
+                <input type="text" name="age" id="age" id="age"> <br>
+                <label>Date Of Visit</label> <br>
+                <input type="date" name="date" id="visit-date"> <br>
+                <label>Time Of Visit</label> <br>
+                <input type="time" name="time" id="visit-time" > <br>
+                <label>Name Of Assistor</label> <br>
+                <input type="text" name="assistor" id="assistor">  <br>
+                <label>Comments</label> <br>
+                <textarea name="comments" style="height: 50px;"></textarea>
+                <br>
+                <input type="submit" value="Submit"> 
+                <!-- submit data to database and direct to a new page-->
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
