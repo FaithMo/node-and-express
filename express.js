@@ -28,9 +28,9 @@ var dbConnection = pool.connect(function(err) {
     else console.log("Adminer 4.7.5 server Connected!");
   });
 
-app.post('/post-feedback', (req, res) => {
-  res.send("Thanks for the info! The following was saved to the database: ");
+app.post('/database-approval', (req, res) => {
   addNewVisitors(req.body);
+  res.send(`Thanks for the info! The following was saved to the database: ${JSON.stringify(req.body)}`);
   //res.send(JSON.stringify(req.body))
 
 });

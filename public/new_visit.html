@@ -7,18 +7,23 @@
     <title>Visitors' form</title>
 </head>
 <style>
+
+body{
+    background: grey;
+}
 .container{
-    width: 400px;
-    height: 600px;
+    width: 300px;
+    height: 450px;
     background: rgba(0,0,0,0.4);
     padding: 40px;
     border-radius: 25px;
     margin: 0 auto;
     color: white;
     margin-top: 50px;
+    font-size: 15px;
 }
 h1{
-    font-size: 30px;
+    font-size: 25px;
     text-align: center;
     color: lightblue;
 }
@@ -27,7 +32,7 @@ h1{
     <div class="container">
         <h1>Visitors' Form</h1>
         <div id="form">
-            <form name="AddVisitor" method="POST" action="/post-feedback">
+            <form name="AddVisitor" method="POST" action="/database-approval">
                 <label>Full Name</label> <br>
                 <input type="text" id="name" name="name"> <br>
                 <label>Age</label> <br> 
