@@ -4,6 +4,7 @@ const express = require ('express');
 const app = express();
 const port = 2000;
 const bodyParser = require('body-parser');
+const Http = require('http');
 
 app.get('/', (req, res) => res.send('Static file expressJS'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -32,8 +33,8 @@ app.post('/database-approval', (req, res) => {
   addNewVisitors(req.body);
   res.send(`Thanks for the info! The following was saved to the database: ${JSON.stringify(req.body)}`);
   //res.send(JSON.stringify(req.body))
-
 });
+
 
 //============================FUNCTIONS=====================================c
 
@@ -47,3 +48,9 @@ const addNewVisitors = (dataObj) => {
         console.log(JSON.stringify(dataObj));
       });
 };
+
+const listAllVisitors = () => {
+  pool.query( "SELECT DISTINCT ID, Name FROM Visitors", (error, respond) => {
+      console.log(error, respond);
+  });
+}

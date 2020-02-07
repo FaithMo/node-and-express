@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
     <title>Visitors' form</title>
 </head>
 <style>
@@ -12,8 +13,8 @@ body{
     background: grey;
 }
 .container{
-    width: 300px;
-    height: 450px;
+    width: 40em;
+    height: 50em;
     background: rgba(0,0,0,0.4);
     padding: 40px;
     border-radius: 25px;
@@ -27,12 +28,23 @@ h1{
     text-align: center;
     color: lightblue;
 }
+.table{
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    width: 40em;
+}
+
+.table tr {
+    font-size: 1.2em;
+}
+
 </style>
 <body>
     <div class="container">
         <h1>Visitors' Form</h1>
         <div id="form">
-            <form name="AddVisitor" method="POST" action="/database-approval">
+            <h3 style="color: lightblue;" > <u>Add new Visitor</u></h3>
+            <form method="POST" action="/database-approval">
                 <label>Full Name</label> <br>
                 <input type="text" id="name" name="name"> <br>
                 <label>Age</label> <br> 
@@ -48,9 +60,40 @@ h1{
                 <br>
                 <input type="submit" value="Submit"> 
                 <!-- submit data to database and direct to a new page-->
-            </form>
+            </form> <br>  <br>
+            <h3 style="color: lightblue;" ><u>View Visitors</u> </h3>
+            <table class="table" id="visitors_table"> 
+                <tr >
+                    <th>name</th>
+                    <th>age</th>
+                    <th>date</th>
+                    <th>time</th>
+                    <th>assistor</th>
+                    <th>comments</th>
+                </tr>
+            </table>
         </div>
     </div>
 </body>
+
+<script>
+    $(document).ready(()=> {
+        $.getJSON('./visitors.json', (data)=>{
+            var visitors_data = '';
+            console.log(data);
+            $.each(data, function(key, value){
+                visitors_data += '<tr>';
+                visitors_data += '<td>' + value.name + '</td>';
+                visitors_data += '<td>' + value.age + '</td>';
+                visitors_data += '<td>' + value.date + '</td>';
+                visitors_data += '<td>' + value.time + '</td>';
+                visitors_data += '<td>' + value.assistor + '</td>';
+                visitors_data += '<td>' + value.comments + '</td>';
+                visitors_data += '</tr>';
+            });
+            $("#visitors_table").append(visitors_data);
+        })
+    })
+</script>
 
 </html>
