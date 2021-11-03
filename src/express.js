@@ -1,39 +1,27 @@
 //======================STATIC=FILE=SERVER================================
 
 const express = require('express');
-const app = express();
 const port = 2000;
 const bodyParser = require('body-parser');
-const Http = require('http');
-// const pool = require("./pool")
+const path = require('path')
+const pool = require("./pool")
 
-app.get('/', (req, res) => res.send('Static file expressJS'));
+const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
+
+pool.connect(function(err) {
+  if (err) console.log(err + " Ooops");
+  else console.log("Connected!");
+});
 
 app.use(express.static('public'));
 
 app.listen(port, () => console.log(`http://localhost:${port}/new_visit`));
 
-//=======================DATABASE==SERVER================================
-const Pool = require("pg").Pool;
-const pool = new Pool({
-    user: "user3",
-    host: "localhost",
-    database: "db",
-    password: "pass3",
-    port: 5432
-  })
-module.exports = pool
-  
-let dbConnection = pool.connect(function(err) {
-    if (err) console.log(err + " Ooops");
-    else console.log("Adminer 4.7.5 server Connected!");
-  });
-
-app.post('/database-approval', (req, res) => {
-  addNewVisitors(req.body);
-  res.send(`Thanks for the info! The following was saved to the database: ${JSON.stringify(req.body)}`);
-});
+// app.post('/database-approval', (req, res) => {
+//   addNewVisitors(req.body);
+//   res.send(`Thanks for the info! The following was saved to the database: ${JSON.stringify(req.body)}`);
+// });
 
 
 //============================FUNCTIONS=====================================c
@@ -46,11 +34,24 @@ const addNewVisitors = (dataObj) => {
       (error) => {
         if (error) {throw new Error (error)}
         console.log(JSON.stringify(dataObj));
+        return JSON.stringify(dataObj)
       });
 };
 
+let add = addNewVisitors({'Name': 'Faith', 
+'Age': 23, 'Date': '2010-09-12', 
+'Time': '19:00', 'Assistor': 'Kim', 
+'Comments': 'Nothing'})
+console.log(add)
+
+app.set('views', path.join(__dirname, '../views'))
+app.set('view engine', 'pug')
+app.get('/new_visit', (req, res) => {
+  res.render('views', `Your data: ${add}`)
+});
 const listAllVisitors = () => {
   pool.query( "SELECT DISTINCT ID, Name FROM Visitors", (error, respond) => {
       console.log(error, respond);
   });
 }
+
