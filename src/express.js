@@ -9,30 +9,34 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('public'));
 
-pool.connect((_, err) => {
+pool.connect((error) => {
   if(err){
-    throw new Error("Not connected")
-  }
+    throw error
+  }else{
   console.log("Connected!");
+  }
 });
 
 app.listen(2000, () => console.log(`http://localhost:${2000}/new_visit`));
 
 const createTable = () => {
-  pool.query(`CREATE TABLE Visitors ( id SERIAL PRIMARY KEY, name VARCHAR(50), age INT, date  DATE, time TIME, assistor VARCHAR(50), comments VARCHAR(100))`,
-  (_, err) => {
-    if(err){
-      throw new Error("Table Created")
-    }}
-    )}
+  pool.query(`CREATE TABLE Visitors ( id SERIAL PRIMARY KEY, name VARCHAR(50), age INT, date  DATE, time TIME, assistor VARCHAR(50), comments VARCHAR(100))`),
+  (error, data) => {
+    if(error) {
+      throw error
+    } else {
+      return data
+    }
+   }
+  }
 
 const addNewVisitors = (dataObj) => {
     pool.query(
       `INSERT INTO Visitors (name, age, date, time, assistor, comments) 
       VALUES ($1, $2, $3, $4, $5, $6)`,
       [dataObj.name,dataObj.age,dataObj.date,dataObj.time,dataObj.assistor,dataObj.comments],
-      (_, err) => {
-        if(err){
+      (error) => {
+        if(error){
           throw new Error("Visitor Not Added")
         }
       return JSON.stringify(dataObj)
@@ -52,9 +56,11 @@ app.get('/new_visit', (_,res) => {
 });
 const listAllVisitors = () => {
   pool.query( "SELECT DISTINCT ID, Name FROM Visitors",
-  (_, err) => {
-    if(err){
-      throw new Error("Cannot list visitors")
+  (error, data) => {
+    if(error){
+      throw error
+    } else {
+      return data
     }}
   )}
 
