@@ -58,8 +58,9 @@ h1{
                 <textarea name="comments" style="height: 50px;"></textarea>
                 <br>
                 <input id="sub" type="submit" value="Submit"> 
-            </form> <br>  <br>
-            <h3 ><u>View Visitors</u> </h3>
+            </form> 
+            <!-- <br>  <br> -->
+            <!-- <h3 ><u>View Visitors</u> </h3>
             <table class="table" id="visitors_table"> 
                 <tr >
                     <th>name</th>
@@ -69,12 +70,12 @@ h1{
                     <th>assistor</th>
                     <th>comments</th>
                 </tr>
-            </table>
+            </table> -->
         </div>
     </div>
 </body>
 
-<script>
+<!-- <script>
     $(document).ready(()=> {
         $.getJSON('./visitors.json', (data)=>{
             let visitors_data = '';
@@ -112,6 +113,6 @@ const express = require('express')
         res.render('views', {title: 'Your data: ', data: `${data.body}`})
         res.sendFile(path.join(__dirname+'./views/views.pug'));
     })
-</script>
+</script> -->
 
 </html>
