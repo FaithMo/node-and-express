@@ -42,12 +42,12 @@ h1{
     <div class="container">
         <h1>Visitors' Form</h1>
         <div id="form">
-            <h3 style="color: lightblue;" > <u>Add new Visitor</u></h3>
-            <form method="POST" action="./views.pug">
+            <h3 > <u>Add new Visitor</u></h3>
+            <form id="Form" method="POST" action="/">
                 <label>Full Name</label> <br>
                 <input type="text" id="name" name="name"> <br>
                 <label>Age</label> <br> 
-                <input type="text" name="age" id="age" id="age"> <br>
+                <input type="text" name="age" id="age"> <br>
                 <label>Date Of Visit</label> <br>
                 <input type="date" name="date" id="visit-date"> <br>
                 <label>Time Of Visit</label> <br>
@@ -58,9 +58,8 @@ h1{
                 <textarea name="comments" style="height: 50px;"></textarea>
                 <br>
                 <input id="sub" type="submit" value="Submit"> 
-                <!-- submit data to database and direct to a new page-->
             </form> <br>  <br>
-            <h3 style="color: lightblue;" ><u>View Visitors</u> </h3>
+            <h3 ><u>View Visitors</u> </h3>
             <table class="table" id="visitors_table"> 
                 <tr >
                     <th>name</th>
@@ -92,6 +91,26 @@ h1{
             });
             $("#visitors_table").append(visitors_data);
         })
+    })
+    const info = document.getElementById("Form").onsubmit("Submit", view());
+    const view = () => {
+        console.log("hi there")
+        console.log(info.value)
+    }
+    view()
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }))
+// app.post('/approve', (req, res) => {
+//   res.send(`Full name is:${req.body}.`);
+// });
+const express = require('express')
+    const path = require('path')
+    app.set('views', path.join(__dirname, '../views'))
+    app.set('view engine', 'pug')
+
+    app.get('/new_visit/thanks', (error, data) => {
+        res.render('views', {title: 'Your data: ', data: `${data.body}`})
+        res.sendFile(path.join(__dirname+'./views/views.pug'));
     })
 </script>
 
