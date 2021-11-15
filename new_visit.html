@@ -59,60 +59,8 @@ h1{
                 <br>
                 <input id="sub" type="submit" value="Submit"> 
             </form> 
-            <!-- <br>  <br> -->
-            <!-- <h3 ><u>View Visitors</u> </h3>
-            <table class="table" id="visitors_table"> 
-                <tr >
-                    <th>name</th>
-                    <th>age</th>
-                    <th>date</th>
-                    <th>time</th>
-                    <th>assistor</th>
-                    <th>comments</th>
-                </tr>
-            </table> -->
         </div>
     </div>
 </body>
-
-<!-- <script>
-    $(document).ready(()=> {
-        $.getJSON('./visitors.json', (data)=>{
-            let visitors_data = '';
-            console.log(data);
-            $.each(data, function(key, value){
-                visitors_data += '<tr>';
-                visitors_data += '<td>' + value.name + '</td>';
-                visitors_data += '<td>' + value.age + '</td>';
-                visitors_data += '<td>' + value.date + '</td>';
-                visitors_data += '<td>' + value.time + '</td>';
-                visitors_data += '<td>' + value.assistor + '</td>';
-                visitors_data += '<td>' + value.comments + '</td>';
-                visitors_data += '</tr>';
-            });
-            $("#visitors_table").append(visitors_data);
-        })
-    })
-    const info = document.getElementById("Form").onsubmit("Submit", view());
-    const view = () => {
-        console.log("hi there")
-        console.log(info.value)
-    }
-    view()
-const bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({ extended: true }))
-// app.post('/approve', (req, res) => {
-//   res.send(`Full name is:${req.body}.`);
-// });
-const express = require('express')
-    const path = require('path')
-    app.set('views', path.join(__dirname, '../views'))
-    app.set('view engine', 'pug')
-
-    app.get('/new_visit/thanks', (error, data) => {
-        res.render('views', {title: 'Your data: ', data: `${data.body}`})
-        res.sendFile(path.join(__dirname+'./views/views.pug'));
-    })
-</script> -->
 
 </html>
