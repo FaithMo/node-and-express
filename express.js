@@ -28,6 +28,7 @@ app.get("/new_visit", (req, res) => {
 
 app.set("views", path.join(__dirname, "./views"));
 app.set("view engine", "pug");
+
 app.post("/", async (req, res) => {
   let userInfo = req.body;
   await addNewVisitors(
