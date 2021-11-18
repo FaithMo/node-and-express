@@ -36,4 +36,4 @@ const listAllVisitors = () => {
   });
 };
 
-module.exports = { createTable, addNewVisitors };
+module.exports = { createTable, addNewVisitors, listAllVisitors };

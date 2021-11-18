@@ -2,13 +2,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const { pool } = require("./src/pool");
-const { createTable, addNewVisitors } = require("./src/source");
+const { createTable, addNewVisitors, listAllVisitors } = require("./src/source");
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
+pool.on('error', (err) => {
+  console.error('An idle client has experienced an error', err.stack)
+})
 pool.connect((error) => {
   if (error) {
     throw error;
