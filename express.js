@@ -5,8 +5,6 @@ const { pool } = require("./src/pool");
 const {
   createTable,
   addNewVisitors,
-  listAllVisitors,
-  viewVisitor,
 } = require("./src/source");
 
 const app = express();
@@ -26,11 +24,16 @@ pool.connect((error) => {
 
 app.listen(2001, () => console.log(`http://localhost:${2001}/new_visit`));
 
-// createTable();
+createTable();
 
 app.get("/new_visit", (req, res) => {
-  res.sendFile(path.join(__dirname + "/new_visit.html"));
-  console.log(req.body);
+  res.sendFile(path.join(__dirname + "/new_visit.html")), (error) => {
+    if (error) {
+      throw error
+    } else {
+      console.log(req.body)
+    }
+  }
 });
 
 app.set("views", path.join(__dirname, "./views"));
@@ -47,7 +50,6 @@ app.post("/", async (req, res) => {
     userInfo.comments
   );
   res.render("views", {
-    title: "thanks",
     message: "Thank you for the info!",
     id: vis.id,
     name: userInfo.name,
@@ -56,5 +58,11 @@ app.post("/", async (req, res) => {
     time: userInfo.time,
     assistant: userInfo.assistor,
     comments: userInfo.comments,
-  });
+  }), (error, data) => {
+    if (error) {
+      throw error
+    } else {
+      console.log(data)
+    }
+  }
 });

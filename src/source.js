@@ -12,10 +12,10 @@ const createTable = () => {
     };
 };
 const addNewVisitors = async (name, age, date, time, assistor, comments) => {
-  const command = `INSERT INTO Visitors (name, age, date, time, assistor, comments) 
-         VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
-  const input = [name, age, date, time, assistor, comments];
-  const data = await pool.query(command, input);
+  const clause = `INSERT INTO Visitors (name, age, date, time, assistor, comments) 
+          	       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+  const arg = [name, age, date, time, assistor, comments];
+  const data = await pool.query(clause, arg);
   return data.rows[0];
 };
 
@@ -41,4 +41,4 @@ const viewVisitor = (name) => {
     };
 };
 
-module.exports = { createTable, addNewVisitors, listAllVisitors, viewVisitor };
+module.exports = { createTable, addNewVisitors };
