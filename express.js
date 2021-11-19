@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const { pool } = require("./src/pool");
-const { createTable, addNewVisitors, listAllVisitors } = require("./src/source");
+const { createTable, addNewVisitors, listAllVisitors, viewVisitor } = require("./src/source");
 
 const app = express();
 app.use(bodyParser.json());
@@ -19,9 +19,9 @@ pool.connect((error) => {
   }
 });
 
-app.listen(2000, () => console.log(`http://localhost:${2000}/new_visit`));
+app.listen(2001, () => console.log(`http://localhost:${2001}/new_visit`));
 
-createTable();
+// createTable();
 
 app.get("/new_visit", (req, res) => {
   res.sendFile(path.join(__dirname + "/new_visit.html"));
@@ -33,7 +33,7 @@ app.set("view engine", "pug");
 
 app.post("/", async (req, res) => {
   let userInfo = req.body;
-  await addNewVisitors(
+  let vis = await addNewVisitors(
     userInfo.name,
     userInfo.age,
     userInfo.date,
@@ -41,9 +41,11 @@ app.post("/", async (req, res) => {
     userInfo.assistor,
     userInfo.comments
   );
+  console.log(vis)
   res.render("views", {
     title: "thanks",
     message: "Thank you for the info!",
+    // id: vis.rows,
     name: userInfo.name,
     age: userInfo.age,
     date: userInfo.date,
@@ -51,4 +53,6 @@ app.post("/", async (req, res) => {
     assistant: userInfo.assistor,
     comments: userInfo.comments,
   });
+  // console.log(viewVisitor(userInfo.name))
+
 });

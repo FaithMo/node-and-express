@@ -14,26 +14,41 @@ const createTable = () => {
 
 const addNewVisitors = async (name, age, date, time, assistor, comments) => {
   pool.query(
-    `INSERT INTO IF NOT EXISTS Visitors (name, age, date, time, assistor, comments) 
-      VALUES ($1, $2, $3, $4, $5, $6)`,
+    `INSERT INTO Visitors (name, age, date, time, assistor, comments) 
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
     [name, age, date, time, assistor, comments],
-    (error) => {
+    (error, data) => {
       if (error) {
         throw error
+      } else {
+        // return data
+        return JSON.stringify(data)
       }
-      return JSON.stringify(name, age, date, time, assistor, comments);
+      // return JSON.stringify(name, age, date, time, assistor, comments);
     }
   );
 };
 
 const listAllVisitors = () => {
-  pool.query("SELECT DISTINCT ID, Name FROM Visitors", (error, data) => {
+  pool.query("SELECT * FROM Visitors", (error, data) => {
+    let info = data
     if (error) {
       throw error;
     } else {
-      return data;
+      console.log(info.rows)
     }
   });
 };
 
-module.exports = { createTable, addNewVisitors, listAllVisitors };
+const viewVisitor = (name) => {
+  pool.query(`SELECT * FROM Visitors WHERE id = ${name}`),
+    (error, data) => {
+      if (error) {
+        throw error;
+      } else {
+        console.log(data.rows);
+      }
+    };
+}
+
+module.exports = { createTable, addNewVisitors, listAllVisitors, viewVisitor };
