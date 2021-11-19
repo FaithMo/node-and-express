@@ -11,31 +11,21 @@ const createTable = () => {
       }
     };
 };
-
 const addNewVisitors = async (name, age, date, time, assistor, comments) => {
-  pool.query(
-    `INSERT INTO Visitors (name, age, date, time, assistor, comments) 
-      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [name, age, date, time, assistor, comments],
-    (error, data) => {
-      if (error) {
-        throw error
-      } else {
-        // return data
-        return JSON.stringify(data)
-      }
-      // return JSON.stringify(name, age, date, time, assistor, comments);
-    }
-  );
+  const command = `INSERT INTO Visitors (name, age, date, time, assistor, comments) 
+         VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+  const input = [name, age, date, time, assistor, comments];
+  const data = await pool.query(command, input);
+  return data.rows[0];
 };
 
 const listAllVisitors = () => {
   pool.query("SELECT * FROM Visitors", (error, data) => {
-    let info = data
+    let info = data;
     if (error) {
       throw error;
     } else {
-      console.log(info.rows)
+      console.log(info.rows);
     }
   });
 };
@@ -49,6 +39,6 @@ const viewVisitor = (name) => {
         console.log(data.rows);
       }
     };
-}
+};
 
 module.exports = { createTable, addNewVisitors, listAllVisitors, viewVisitor };

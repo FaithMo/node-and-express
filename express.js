@@ -2,15 +2,20 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const { pool } = require("./src/pool");
-const { createTable, addNewVisitors, listAllVisitors, viewVisitor } = require("./src/source");
+const {
+  createTable,
+  addNewVisitors,
+  listAllVisitors,
+  viewVisitor,
+} = require("./src/source");
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-pool.on('error', (err) => {
-  console.error('An idle client has experienced an error', err.stack)
-})
+pool.on("error", (err) => {
+  console.error("An idle client has experienced an error", err.stack);
+});
 pool.connect((error) => {
   if (error) {
     throw error;
@@ -41,11 +46,10 @@ app.post("/", async (req, res) => {
     userInfo.assistor,
     userInfo.comments
   );
-  console.log(vis)
   res.render("views", {
     title: "thanks",
     message: "Thank you for the info!",
-    // id: vis.rows,
+    id: vis.id,
     name: userInfo.name,
     age: userInfo.age,
     date: userInfo.date,
@@ -53,6 +57,4 @@ app.post("/", async (req, res) => {
     assistant: userInfo.assistor,
     comments: userInfo.comments,
   });
-  // console.log(viewVisitor(userInfo.name))
-
 });
