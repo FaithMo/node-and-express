@@ -1,4 +1,15 @@
 const { pool } = require("./pool");
+
+const dropTable = () => {
+  pool.query("DROP TABLE IF EXISTS visitors"),
+  (error) => {
+    if (error) {
+      throw error;
+    }else{
+      console.log("Successful")
+    }
+  }
+};
 const createTable = () => {
   pool.query(
     `CREATE TABLE Visitors ( id SERIAL PRIMARY KEY, name VARCHAR(50), age INT, date  DATE, time TIME, assistor VARCHAR(50), comments VARCHAR(100))`
@@ -41,4 +52,4 @@ const viewVisitor = (name) => {
     };
 };
 
-module.exports = { createTable, addNewVisitors };
+module.exports = { createTable, addNewVisitors, dropTable }

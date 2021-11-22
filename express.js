@@ -5,6 +5,7 @@ const { pool } = require("./src/pool");
 const {
   createTable,
   addNewVisitors,
+  dropTable
 } = require("./src/source");
 
 const app = express();
@@ -24,6 +25,7 @@ pool.connect((error) => {
 
 app.listen(2001, () => console.log(`http://localhost:${2001}/new_visit`));
 
+dropTable();
 createTable();
 
 app.get("/new_visit", (req, res) => {
